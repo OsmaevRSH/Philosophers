@@ -1,0 +1,28 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/Users/ltheresi/CLionProjects/Philosophers/ft_atoi.c
+philo_one.h
+/Users/ltheresi/CLionProjects/Philosophers/philo_one.h
+
+/Users/ltheresi/CLionProjects/Philosophers/ft_x_malloc.c
+philo_one.h
+/Users/ltheresi/CLionProjects/Philosophers/philo_one.h
+
+/Users/ltheresi/CLionProjects/Philosophers/main.c
+philo_one.h
+/Users/ltheresi/CLionProjects/Philosophers/philo_one.h
+stdio.h
+/Users/ltheresi/CLionProjects/Philosophers/stdio.h
+
+/Users/ltheresi/CLionProjects/Philosophers/philo_one.h
+unistd.h
+/Users/ltheresi/CLionProjects/Philosophers/unistd.h
+stdlib.h
+/Users/ltheresi/CLionProjects/Philosophers/stdlib.h
+
