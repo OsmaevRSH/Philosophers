@@ -29,12 +29,13 @@ time_t 	get_current_time()
 void	*philo(void *data)
 {
 	t_thread *philo = (t_thread *)data;
-	printf("%ld %zu has taken a fork\n", get_current_time() - g_time, philo->id);
 	philo->init = get_current_time();
 	while (!error)
 	{
 		pthread_mutex_lock(&philo->left);
 		pthread_mutex_lock(&philo->right);
+		printf("%ld %zu has taken a fork\n", get_current_time() - g_time, philo->id);
+		printf("%ld %zu is eating\n", get_current_time() - g_time, philo->id);
 		usleep(input_philo_array[2] * 1000);
 		if (get_current_time() - philo->init > input_philo_array[1])
 		{
@@ -44,10 +45,10 @@ void	*philo(void *data)
 			pthread_mutex_unlock(&philo->left);
 			exit(1);
 		}
-		printf("%ld %zu is eating\n", get_current_time() - g_time, philo->id);
 		philo->init = get_current_time();
 		pthread_mutex_unlock(&philo->right);
 		pthread_mutex_unlock(&philo->left);
+		printf("%ld %zu is sleeping\n", get_current_time() - g_time, philo->id);
 		usleep(input_philo_array[3] * 1000);
 		if (get_current_time() - philo->init > input_philo_array[1])
 		{
@@ -56,7 +57,6 @@ void	*philo(void *data)
 			pthread_mutex_unlock(&philo->left);
 			exit(1);
 		}
-		printf("%ld %zu is sleeping\n", get_current_time() - g_time, philo->id);
 		printf("%ld %zu is thinking\n", get_current_time() - g_time, philo->id);
 	}
 	return NULL;
