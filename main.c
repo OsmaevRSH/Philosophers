@@ -1,18 +1,8 @@
 #include "philo_one.h"
 
-time_t 	get_current_time()
-{
-	struct timeval tmp_time;
-	time_t time;
-
-	gettimeofday(&tmp_time, NULL);
-	time = tmp_time.tv_sec * 1000 + tmp_time.tv_usec / 1000;
-	return (time);
-}
-
 void	*philo(void *data)
 {
-	pthread_t died;
+//	pthread_t died;
 	t_thread *philo = (t_thread *)data;
 	philo->init = get_current_time();
 //	pthread_create(&died, NULL, check_died, (void *)&philo->init);
@@ -20,11 +10,11 @@ void	*philo(void *data)
 	while (!error)
 	{
 //		pthread_mutex_lock(&philo->left_philo);
-//		pthread_mutex_lock(&philo->philo);
-//		pthread_mutex_lock(&philo->right_philo);
-		pthread_mutex_lock(&philo->left);
+		pthread_mutex_lock(&philo->right_philo);
+		pthread_mutex_lock(&philo->philo);
+		pthread_mutex_lock(&philo->left_fork);
 		ft_str_print(" has taken a fork\n", philo);
-		pthread_mutex_lock(&philo->right);
+		pthread_mutex_lock(&philo->right_fork);
 		ft_str_print(" has taken a fork\n", philo);
 		ft_str_print(" is eating\n", philo);
 		philo->init = get_current_time();
@@ -33,23 +23,23 @@ void	*philo(void *data)
 		{
 			printf("%ld %zu died\n", get_current_time() - g_time, philo->id);
 			error = 1;
-			pthread_mutex_unlock(&philo->right);
-			pthread_mutex_unlock(&philo->left);
-			exit(1);
+			pthread_mutex_unlock(&philo->right_fork);
+			pthread_mutex_unlock(&philo->left_fork);
+//			exit(1);
 		}
-//		pthread_mutex_unlock(&philo->right_philo);
-//		pthread_mutex_unlock(&philo->philo);
+		pthread_mutex_unlock(&philo->right_philo);
+		pthread_mutex_unlock(&philo->right_fork);
+		pthread_mutex_unlock(&philo->philo);
 //		pthread_mutex_unlock(&philo->left_philo);
-		pthread_mutex_unlock(&philo->right);
-		pthread_mutex_unlock(&philo->left);
+		pthread_mutex_unlock(&philo->left_fork);
 		ft_str_print(" is sleeping\n", philo);
 		usleep(input_philo_array[3] * 1000);
 		if (get_current_time() - philo->init > input_philo_array[1])
 		{
 			error = 1;
-			pthread_mutex_unlock(&philo->right);
-			pthread_mutex_unlock(&philo->left);
-			exit(1);
+			pthread_mutex_unlock(&philo->right_fork);
+			pthread_mutex_unlock(&philo->left_fork);
+//			exit(1);
 		}
 		ft_str_print(" is thinking\n", philo);
 	}
@@ -76,8 +66,8 @@ void thread_func()
 	while (i < input_philo_array[0])
 	{
 		data[i].id = i;
-		data[i].right = mutex[i % input_philo_array[0]];
-		data[i].left = mutex[i-1 % input_philo_array[0]];
+		data[i].right_fork = mutex[i % input_philo_array[0]];
+		data[i].left_fork = mutex[i - 1 % input_philo_array[0]];
 		data[i].left_philo = philo_lock[i-1 % input_philo_array[0]];
 		data[i].right_philo = philo_lock[i+1 % input_philo_array[0]];
 		data[i].philo = philo_lock[i % input_philo_array[0]];
@@ -88,16 +78,16 @@ void thread_func()
 	{
 		pthread_create(&thread[i], NULL, philo, (void *)&data[i]);
 		pthread_detach(thread[i]);
-//		i += 2;
-		i++;
+		i += 2;
+//		i++;
 	}
-//	i = 1;
-//	while (i < input_philo_array[0])
-//	{
-//		pthread_create(&thread[i], NULL, philo, (void *)&data[i]);
-//		pthread_detach(thread[i]);
-//		i += 2;
-//	}
+	i = 1;
+	while (i < input_philo_array[0])
+	{
+		pthread_create(&thread[i], NULL, philo, (void *)&data[i]);
+		pthread_detach(thread[i]);
+		i += 2;
+	}
 	while (!error)
 	{
 		;

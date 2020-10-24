@@ -15,8 +15,8 @@ time_t				g_time;
 typedef struct		s_thread
 {
 	size_t			id;
-	pthread_mutex_t left;
-	pthread_mutex_t right;
+	pthread_mutex_t left_fork;
+	pthread_mutex_t right_fork;
 	time_t			init;
 	pthread_mutex_t left_philo;
 	pthread_mutex_t philo;

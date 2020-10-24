@@ -3,4 +3,4 @@ project(Philosophers C)
 
 set(CMAKE_C_STANDARD 99)
 
-add_executable(Philosophers main.c ft_x_malloc.c philo_one.h ft_atoi.c)
+add_executable(Philosophers main.c ft_x_malloc.c philo_one.h ft_atoi.c utils.c printstr.c)
