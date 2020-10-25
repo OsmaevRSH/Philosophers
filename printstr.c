@@ -1,9 +1,12 @@
 #include "philo_one.h"
 
-time_t		get_current_time()
+static char			*message_array[] = {"has taken a fork\n", "is eating\n", "is sleeping\n", "is thinking\n", "died\n"};
+static char			number[] = "0123456789";
+
+time_t get_current_time()
 {
 	struct timeval			tmp_time;
-	time_t					time;
+	unsigned					time;
 
 	gettimeofday(&tmp_time, NULL);
 	time = tmp_time.tv_sec * 1000 + tmp_time.tv_usec / 1000;
@@ -25,7 +28,7 @@ uint8_t		ft_nlen(uint32_t n)
 }
 
 
-void		ft_str_print(const char *str, t_thread *philo)
+void		ft_str_print(int j, t_thread *philo)
 {
 	char					stat_buffer[50];
 	uint8_t					size;
@@ -33,30 +36,29 @@ void		ft_str_print(const char *str, t_thread *philo)
 	size_t					i;
 	size_t					len;
 	int						tmp;
+	char					*str = (char *)message_array[j];
 
-	i = 0;
-	while (i < 50)
-		stat_buffer[i++] = ' ';
+	memset(stat_buffer, ' ', sizeof(stat_buffer));
 	tmp = philo->id;
 	time = get_current_time() - g_time;
 	size = ft_nlen(time);
 	len = size + 1;
 	i = -1;
+
 	while (++i < size)
 	{
-		stat_buffer[size - 1 - i] = (char)((time % 10) + '0');
+		stat_buffer[size - 1 - i] = number[time % 10];
 		time /= 10;
 	}
 	size = ft_nlen(tmp);
 	i = -1;
 	while (++i < size)
 	{
-		stat_buffer[len + size - 1 - i] = (char)((tmp % 10) + '0');
+		stat_buffer[len + size - 1 - i] = number[tmp % 10];
 		tmp /= 10;
 	}
 	len += size + 1;
-	i = -1;
-	while (str[++i])
-		stat_buffer[len + i] = str[i];
-	write(1, stat_buffer, len + i);
+	while (*str)
+		stat_buffer[len++] = *str++;
+	write(1, stat_buffer, len);
 }

@@ -5,14 +5,9 @@ void *check_died(void *tmp_philo)
 	t_thread *philo = (t_thread *)tmp_philo;
 	while (!error)
 	{
-//		if (philo->eat == 1)
-//		{
-//			philo->init = get_current_time();
-//			philo->eat = 0;
-//		}
 		if (get_current_time() - philo->init > input_philo_array[TIME_TO_DIE])
 		{
-			ft_str_print("died\n", philo);
+			ft_str_print(4, philo);
 			error = 1;
 			pthread_mutex_unlock(&philo->right_fork);
 			pthread_mutex_unlock(&philo->left_fork);
@@ -24,36 +19,37 @@ void *check_died(void *tmp_philo)
 void	*philo(void *data)
 {
 	pthread_t died;
-//	int i = 0;
+	unsigned eat = input_philo_array[TIME_TO_EAT] * 1000;
+	unsigned sleep = input_philo_array[TIME_TO_SLEEP] * 1000;
 	t_thread *philo = (t_thread *)data;
+	if (philo->id & 1)
+		usleep(input_philo_array[TIME_TO_EAT] * 1000);
 	pthread_create(&died, NULL, check_died, (void *)philo);
 	philo->init = get_current_time();
 	while (!error)
 	{
 		pthread_mutex_lock(&philo->left_fork);
-		ft_str_print("has taken a fork\n", philo);
+		ft_str_print(0, philo);
 		pthread_mutex_lock(&philo->right_fork);
-		ft_str_print("has taken a fork\n", philo);
-//		philo->eat = 1;
+		ft_str_print(0, philo);
 		philo->init = get_current_time();
-		ft_str_print("is eating\n", philo);
-		usleep(input_philo_array[TIME_TO_EAT] * 1000);
+		ft_str_print(1, philo);
+		usleep(eat);
 		pthread_mutex_unlock(&philo->left_fork);
 		pthread_mutex_unlock(&philo->right_fork);
-		ft_str_print("is sleeping\n", philo);
-		usleep(input_philo_array[TIME_TO_SLEEP] * 1000);
-		ft_str_print("is thinking\n", philo);
+		ft_str_print(2, philo);
+		usleep(sleep);
+		ft_str_print(3, philo);
 	}
 	return NULL;
 }
-
 
 void thread_func()
 {
 	pthread_mutex_t mutex[input_philo_array[NUMBER_OF_PHILOSOPHERS]];
 	t_thread data[input_philo_array[NUMBER_OF_PHILOSOPHERS]];
-	size_t i = 0;
 	pthread_t thread[input_philo_array[NUMBER_OF_PHILOSOPHERS]];
+	uint8_t i = 0;
 
 	while (i < input_philo_array[NUMBER_OF_PHILOSOPHERS])
 	{
@@ -61,25 +57,19 @@ void thread_func()
 		i++;
 	}
 	i = 0;
-	g_time = get_current_time();
 	while (i < input_philo_array[NUMBER_OF_PHILOSOPHERS])
 	{
 		data[i].id = i;
 		data[i].right_fork = mutex[i % input_philo_array[NUMBER_OF_PHILOSOPHERS]];
-		data[i].left_fork = mutex[i - 1 % input_philo_array[NUMBER_OF_PHILOSOPHERS]];
+		data[i].left_fork = mutex[(i - 1) % input_philo_array[NUMBER_OF_PHILOSOPHERS]];
 		i++;
 	}
 	i = 0;
+	g_time = get_current_time();
 	while (i < input_philo_array[NUMBER_OF_PHILOSOPHERS])
 	{
 		pthread_create(&thread[i], NULL, philo, (void *)&data[i]);
-		i += 2;
-	}
-	i = 1;
-	while (i < input_philo_array[NUMBER_OF_PHILOSOPHERS])
-	{
-		pthread_create(&thread[i], NULL, philo, (void *)&data[i]);
-		i += 2;
+		i++;
 	}
 	while (!error)
 	{
@@ -106,17 +96,15 @@ int		main(int argc, char **argv)
 	}
     if (argc == 5)
 	{
-		input_philo_array = (int *)ft_x_malloc(sizeof(int) * 4);
+		input_philo_array = (int *)malloc(sizeof(int) * 4);
 		while (++i < 4)
 			input_philo_array[i] = ft_atoi(argv[i + 1]);
-//		check_count_of_eat = 0;
 	}
     else
 	{
-		input_philo_array = (int *)ft_x_malloc(sizeof(int) * 5);
+		input_philo_array = (int *)malloc(sizeof(int) * 5);
 		while (++i < 5)
 			input_philo_array[i] = ft_atoi(argv[i + 1]);
-//		check_count_of_eat = 1;
 	}
 	thread_func();
 	return (0);
