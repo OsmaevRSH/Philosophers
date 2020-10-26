@@ -78,16 +78,16 @@
 				</MakeCommands>
 			</Target>
 		</Build>
-		<Unit filename="/Users/ltheresi/CLionProjects/Philosophers/ft_atoi.c">
-			<Option target="Philosophers"/>
-		</Unit>
-		<Unit filename="/Users/ltheresi/CLionProjects/Philosophers/ft_x_malloc.c">
-			<Option target="Philosophers"/>
-		</Unit>
 		<Unit filename="/Users/ltheresi/CLionProjects/Philosophers/main.c">
 			<Option target="Philosophers"/>
 		</Unit>
 		<Unit filename="/Users/ltheresi/CLionProjects/Philosophers/philo_one.h">
+			<Option target="Philosophers"/>
+		</Unit>
+		<Unit filename="/Users/ltheresi/CLionProjects/Philosophers/printstr.c">
+			<Option target="Philosophers"/>
+		</Unit>
+		<Unit filename="/Users/ltheresi/CLionProjects/Philosophers/utils.c">
 			<Option target="Philosophers"/>
 		</Unit>
 		<Unit filename="/Users/ltheresi/CLionProjects/Philosophers/CMakeLists.txt">

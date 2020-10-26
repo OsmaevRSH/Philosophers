@@ -143,60 +143,6 @@ Philosophers/fast:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Philosophers.dir/build.make CMakeFiles/Philosophers.dir/build
 .PHONY : Philosophers/fast
 
-ft_atoi.o: ft_atoi.c.o
-
-.PHONY : ft_atoi.o
-
-# target to build an object file
-ft_atoi.c.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Philosophers.dir/build.make CMakeFiles/Philosophers.dir/ft_atoi.c.o
-.PHONY : ft_atoi.c.o
-
-ft_atoi.i: ft_atoi.c.i
-
-.PHONY : ft_atoi.i
-
-# target to preprocess a source file
-ft_atoi.c.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Philosophers.dir/build.make CMakeFiles/Philosophers.dir/ft_atoi.c.i
-.PHONY : ft_atoi.c.i
-
-ft_atoi.s: ft_atoi.c.s
-
-.PHONY : ft_atoi.s
-
-# target to generate assembly for a file
-ft_atoi.c.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Philosophers.dir/build.make CMakeFiles/Philosophers.dir/ft_atoi.c.s
-.PHONY : ft_atoi.c.s
-
-ft_x_malloc.o: ft_x_malloc.c.o
-
-.PHONY : ft_x_malloc.o
-
-# target to build an object file
-ft_x_malloc.c.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Philosophers.dir/build.make CMakeFiles/Philosophers.dir/ft_x_malloc.c.o
-.PHONY : ft_x_malloc.c.o
-
-ft_x_malloc.i: ft_x_malloc.c.i
-
-.PHONY : ft_x_malloc.i
-
-# target to preprocess a source file
-ft_x_malloc.c.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Philosophers.dir/build.make CMakeFiles/Philosophers.dir/ft_x_malloc.c.i
-.PHONY : ft_x_malloc.c.i
-
-ft_x_malloc.s: ft_x_malloc.c.s
-
-.PHONY : ft_x_malloc.s
-
-# target to generate assembly for a file
-ft_x_malloc.c.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Philosophers.dir/build.make CMakeFiles/Philosophers.dir/ft_x_malloc.c.s
-.PHONY : ft_x_malloc.c.s
-
 main.o: main.c.o
 
 .PHONY : main.o
@@ -224,6 +170,60 @@ main.c.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Philosophers.dir/build.make CMakeFiles/Philosophers.dir/main.c.s
 .PHONY : main.c.s
 
+printstr.o: printstr.c.o
+
+.PHONY : printstr.o
+
+# target to build an object file
+printstr.c.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Philosophers.dir/build.make CMakeFiles/Philosophers.dir/printstr.c.o
+.PHONY : printstr.c.o
+
+printstr.i: printstr.c.i
+
+.PHONY : printstr.i
+
+# target to preprocess a source file
+printstr.c.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Philosophers.dir/build.make CMakeFiles/Philosophers.dir/printstr.c.i
+.PHONY : printstr.c.i
+
+printstr.s: printstr.c.s
+
+.PHONY : printstr.s
+
+# target to generate assembly for a file
+printstr.c.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Philosophers.dir/build.make CMakeFiles/Philosophers.dir/printstr.c.s
+.PHONY : printstr.c.s
+
+utils.o: utils.c.o
+
+.PHONY : utils.o
+
+# target to build an object file
+utils.c.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Philosophers.dir/build.make CMakeFiles/Philosophers.dir/utils.c.o
+.PHONY : utils.c.o
+
+utils.i: utils.c.i
+
+.PHONY : utils.i
+
+# target to preprocess a source file
+utils.c.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Philosophers.dir/build.make CMakeFiles/Philosophers.dir/utils.c.i
+.PHONY : utils.c.i
+
+utils.s: utils.c.s
+
+.PHONY : utils.s
+
+# target to generate assembly for a file
+utils.c.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Philosophers.dir/build.make CMakeFiles/Philosophers.dir/utils.c.s
+.PHONY : utils.c.s
+
 # Help Target
 help:
 	@echo "The following are some of the valid targets for this Makefile:"
@@ -233,15 +233,15 @@ help:
 	@echo "... edit_cache"
 	@echo "... rebuild_cache"
 	@echo "... Philosophers"
-	@echo "... ft_atoi.o"
-	@echo "... ft_atoi.i"
-	@echo "... ft_atoi.s"
-	@echo "... ft_x_malloc.o"
-	@echo "... ft_x_malloc.i"
-	@echo "... ft_x_malloc.s"
 	@echo "... main.o"
 	@echo "... main.i"
 	@echo "... main.s"
+	@echo "... printstr.o"
+	@echo "... printstr.i"
+	@echo "... printstr.s"
+	@echo "... utils.o"
+	@echo "... utils.i"
+	@echo "... utils.s"
 .PHONY : help
 
 

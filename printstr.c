@@ -1,12 +1,25 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   printstr.c                                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ltheresi <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2020/10/26 15:38:12 by ltheresi          #+#    #+#             */
+/*   Updated: 2020/10/26 15:38:15 by ltheresi         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "philo_one.h"
 
-static char			*message_array[] = {"has taken a fork\n", "is eating\n", "is sleeping\n", "is thinking\n", "died\n"};
-static char			number[] = "0123456789";
+char				*g_message_array[] = {"has taken a fork\n", \
+	"is eating\n", "is sleeping\n", "is thinking\n", "died\n"};
+char				g_number[] = "0123456789";
 
-time_t get_current_time()
+time_t		get_current_time(void)
 {
 	struct timeval			tmp_time;
-	unsigned					time;
+	uint32_t				time;
 
 	gettimeofday(&tmp_time, NULL);
 	time = tmp_time.tv_sec * 1000 + tmp_time.tv_usec / 1000;
@@ -17,7 +30,8 @@ uint8_t		ft_nlen(uint32_t n)
 {
 	int						i;
 	static const uint32_t	hash_table[] = { 1000000000, 100000000, 10000000,
-											1000000, 100000, 10000, 1000, 100, 10, 0 };
+	1000000, 100000, 10000, 1000, 100, 10, 0 };
+
 	i = -1;
 	while (hash_table[++i])
 	{
@@ -27,38 +41,31 @@ uint8_t		ft_nlen(uint32_t n)
 	return (1);
 }
 
-
-void		ft_str_print(int j, t_thread *philo)
+void		ft_str_print(uint8_t j, t_thread *philo)
 {
-	char					stat_buffer[50];
-	uint8_t					size;
-	uint32_t				time;
-	size_t					i;
-	size_t					len;
-	int						tmp;
-	char					*str = (char *)message_array[j];
+	t_print					pr;
 
-	memset(stat_buffer, ' ', sizeof(stat_buffer));
-	tmp = philo->id;
-	time = get_current_time() - g_time;
-	size = ft_nlen(time);
-	len = size + 1;
-	i = -1;
-
-	while (++i < size)
+	j == 1 ? philo->eat_counter += 1 : 0;
+	pr.str = g_message_array[j];
+	memset(pr.stat_buffer, ' ', sizeof(pr.stat_buffer));
+	pr.tmp = philo->id;
+	pr.time = get_current_time() - g_time;
+	pr.size = ft_nlen(pr.time);
+	pr.len = pr.size + 1;
+	pr.i = -1;
+	while (++pr.i ^ pr.size)
 	{
-		stat_buffer[size - 1 - i] = number[time % 10];
-		time /= 10;
+		pr.stat_buffer[pr.size - 1 - pr.i] = g_number[pr.time % 10];
+		pr.time /= 10;
 	}
-	size = ft_nlen(tmp);
-	i = -1;
-	while (++i < size)
+	pr.size = ft_nlen(pr.tmp);
+	pr.i = -1;
+	while (++pr.i ^ pr.size)
 	{
-		stat_buffer[len + size - 1 - i] = number[tmp % 10];
-		tmp /= 10;
+		pr.stat_buffer[pr.len + pr.size - 1 - pr.i] = g_number[pr.tmp % 10];
+		pr.tmp /= 10;
 	}
-	len += size + 1;
-	while (*str)
-		stat_buffer[len++] = *str++;
-	write(1, stat_buffer, len);
+	while (*pr.str)
+		pr.stat_buffer[pr.len++ + pr.size + 1] = *pr.str++;
+	write(1, pr.stat_buffer, pr.len + pr.size + 1);
 }

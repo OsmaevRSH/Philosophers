@@ -1,7 +1,7 @@
 file(REMOVE_RECURSE
-  "CMakeFiles/Philosophers.dir/ft_atoi.c.o"
-  "CMakeFiles/Philosophers.dir/ft_x_malloc.c.o"
   "CMakeFiles/Philosophers.dir/main.c.o"
+  "CMakeFiles/Philosophers.dir/printstr.c.o"
+  "CMakeFiles/Philosophers.dir/utils.c.o"
   "Philosophers"
   "Philosophers.pdb"
 )
