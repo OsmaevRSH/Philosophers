@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "philo_one.h"
+#include "philo.h"
 
 int		ft_atoi(const char *str)
 {
@@ -42,8 +42,6 @@ void	*check_died(void *tmp_philo)
 		{
 			ft_str_print(4, philo);
 			g_error = 1;
-			pthread_mutex_unlock(&philo->right_fork);
-			pthread_mutex_unlock(&philo->left_fork);
 		}
 	}
 	return (NULL);
@@ -55,7 +53,7 @@ void	sleep_func(unsigned ms_time)
 
 	stop_time = get_current_time() + ms_time;
 	while (get_current_time() ^ stop_time)
-		usleep(100);
+		usleep(200);
 }
 
 uint8_t	check_count_of_eating(uint16_t count)
@@ -78,15 +76,15 @@ void	*philo(void *data)
 	philo->init = get_current_time();
 	while (check_count_of_eating(philo->eat_counter))
 	{
-		pthread_mutex_lock(&philo->left_fork);
+		sem_wait(semaphore);
 		ft_str_print(0, philo);
-		pthread_mutex_lock(&philo->right_fork);
+		sem_wait(semaphore);
 		ft_str_print(0, philo);
 		philo->init = get_current_time();
 		ft_str_print(1, philo);
 		sleep_func(g_input_array[TIME_TO_EAT]);
-		pthread_mutex_unlock(&philo->right_fork);
-		pthread_mutex_unlock(&philo->left_fork);
+		sem_post(semaphore);
+		sem_post(semaphore);
 		ft_str_print(2, philo);
 		sleep_func(g_input_array[TIME_TO_SLEEP]);
 		ft_str_print(3, philo);

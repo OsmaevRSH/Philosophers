@@ -10,8 +10,8 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef PHILOSOPHERS_PHILO_ONE_H
-# define PHILOSOPHERS_PHILO_ONE_H
+#ifndef PHILOSOPHERS_PHILO_H
+# define PHILOSOPHERS_PHILO_H
 # include "unistd.h"
 # include "stdlib.h"
 # include "stdio.h"
@@ -19,6 +19,7 @@
 # include <unistd.h>
 # include <sys/time.h>
 # include "string.h"
+# include <semaphore.h>
 # define NUMBER_OF_PHILOSOPHERS 0
 # define TIME_TO_DIE 1
 # define TIME_TO_EAT 2
@@ -29,12 +30,11 @@ uint8_t				g_error;
 uint32_t			g_time;
 uint8_t				g_check_eating;
 uint32_t			g_input_array[5];
+sem_t				*semaphore;
 
 typedef struct		s_thread
 {
 	uint8_t			id;
-	pthread_mutex_t left_fork;
-	pthread_mutex_t right_fork;
 	uint32_t		init;
 	uint16_t		eat_counter;
 }					t_thread;

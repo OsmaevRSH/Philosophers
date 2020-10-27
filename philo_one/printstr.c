@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "philo_one.h"
+#include "philo.h"
 
 char				*g_message_array[] = {"has taken a fork\n", \
 	"is eating\n", "is sleeping\n", "is thinking\n", "died\n"};
@@ -41,31 +41,39 @@ uint8_t		ft_nlen(uint32_t n)
 	return (1);
 }
 
+void		print_init(t_print *print, t_thread *philo, uint8_t j)
+{
+	print->str = g_message_array[j];
+	memset(print->stat_buffer, ' ', sizeof(print->stat_buffer));
+	print->tmp = philo->id;
+	print->time = get_current_time() - g_time;
+	print->size = ft_nlen(print->time);
+	print->len = print->size + 1;
+	print->i = -1;
+}
+
 void		ft_str_print(uint8_t j, t_thread *philo)
 {
-	t_print					pr;
+	t_print					print;
 
+	if (g_error)
+		return ;
 	j == 1 ? philo->eat_counter += 1 : 0;
-	pr.str = g_message_array[j];
-	memset(pr.stat_buffer, ' ', sizeof(pr.stat_buffer));
-	pr.tmp = philo->id;
-	pr.time = get_current_time() - g_time;
-	pr.size = ft_nlen(pr.time);
-	pr.len = pr.size + 1;
-	pr.i = -1;
-	while (++pr.i ^ pr.size)
+	print_init(&print, philo, j);
+	while (++print.i ^ print.size)
 	{
-		pr.stat_buffer[pr.size - 1 - pr.i] = g_number[pr.time % 10];
-		pr.time /= 10;
+		print.stat_buffer[print.size - 1 - print.i] = g_number[print.time % 10];
+		print.time /= 10;
 	}
-	pr.size = ft_nlen(pr.tmp);
-	pr.i = -1;
-	while (++pr.i ^ pr.size)
+	print.size = ft_nlen(print.tmp);
+	print.i = -1;
+	while (++print.i ^ print.size)
 	{
-		pr.stat_buffer[pr.len + pr.size - 1 - pr.i] = g_number[pr.tmp % 10];
-		pr.tmp /= 10;
+		print.stat_buffer[print.len +
+		print.size - 1 - print.i] = g_number[print.tmp % 10];
+		print.tmp /= 10;
 	}
-	while (*pr.str)
-		pr.stat_buffer[pr.len++ + pr.size + 1] = *pr.str++;
-	write(1, pr.stat_buffer, pr.len + pr.size + 1);
+	while (*print.str)
+		print.stat_buffer[print.len++ + print.size + 1] = *print.str++;
+	write(1, print.stat_buffer, print.len + print.size + 1);
 }

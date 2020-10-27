@@ -10,14 +10,14 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "philo_one.h"
+#include "philo.h"
 
 void	init_mutex_struct(t_thread *data,
 		pthread_mutex_t *mutex)
 {
 	short i;
 
-	i = 0;
+	i = -1;
 	while (++i < g_input_array[NUMBER_OF_PHILOSOPHERS])
 		pthread_mutex_init(&mutex[i], NULL);
 	while (--i >= 0)
@@ -49,12 +49,9 @@ void	thread_func(void)
 	if (!g_check_eating)
 		while (!g_error)
 			;
-	else
-	{
-		i = 0;
-		while (i < g_input_array[NUMBER_OF_PHILOSOPHERS])
-			pthread_join(thread[i++], NULL);
-	}
+	i = 0;
+	while (i < g_input_array[NUMBER_OF_PHILOSOPHERS])
+		pthread_join(thread[i++], NULL);
 	i = -1;
 	while (++i < g_input_array[NUMBER_OF_PHILOSOPHERS])
 		pthread_mutex_destroy(&mutex[i]);
