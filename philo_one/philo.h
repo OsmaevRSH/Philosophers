@@ -33,8 +33,8 @@ uint32_t			g_input_array[5];
 typedef struct		s_thread
 {
 	uint8_t			id;
-	pthread_mutex_t left_fork;
-	pthread_mutex_t right_fork;
+	pthread_mutex_t *left_fork;
+	pthread_mutex_t *right_fork;
 	uint32_t		init;
 	uint16_t		eat_counter;
 }					t_thread;
