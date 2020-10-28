@@ -17,7 +17,7 @@ void	init_mutex_struct(t_thread *data)
 	short i;
 
 	i = -1;
-	if (!(semaphore = sem_open("forks_semaphore", O_CREAT | O_TRUNC , 0666, g_input_array[NUMBER_OF_PHILOSOPHERS])))
+	if (!(semaphore = sem_open("forks_semaphore", O_CREAT , 0600, g_input_array[NUMBER_OF_PHILOSOPHERS])))
 	{
 		write(2, "error", 5);
 		exit(1);
@@ -36,13 +36,14 @@ void	thread_func(void)
 	pthread_t		thread[g_input_array[NUMBER_OF_PHILOSOPHERS]];
 	short			i;
 
+	sem_unlink("forks_semaphore");
 	init_mutex_struct((t_thread *)&data);
-	i = -2;
-	while ((i += 2) < g_input_array[NUMBER_OF_PHILOSOPHERS])
+	i = -1;
+	while (++i < g_input_array[NUMBER_OF_PHILOSOPHERS] / 2)
 		pthread_create(&thread[i], NULL, philo, (void *)&data[i]);
 	sleep_func(g_input_array[TIME_TO_SLEEP]);
-	i = -1;
-	while ((i += 2) < g_input_array[NUMBER_OF_PHILOSOPHERS])
+	--i;
+	while (++i < g_input_array[NUMBER_OF_PHILOSOPHERS])
 		pthread_create(&thread[i], NULL, philo, (void *)&data[i]);
 	if (!g_check_eating)
 		while (!g_error)

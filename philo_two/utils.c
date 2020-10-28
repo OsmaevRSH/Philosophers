@@ -37,8 +37,7 @@ void	*check_died(void *tmp_philo)
 	philo = (t_thread *)tmp_philo;
 	while (!g_error)
 	{
-		if (get_current_time() - philo->init >
-		g_input_array[TIME_TO_DIE] && philo->eat_counter != g_input_array[4])
+		if ((g_check_eating && get_current_time() - philo->init > g_input_array[TIME_TO_DIE] && philo->eat_counter <= g_input_array[NUMBER_OF_TIMES_EACH_PHILOSOPHERS_MAST_EAT]) || get_current_time() - philo->init > g_input_array[TIME_TO_DIE])
 		{
 			ft_str_print(4, philo);
 			g_error = 1;
