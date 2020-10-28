@@ -46,12 +46,11 @@ void	thread_func(void)
 	i = -1;
 	while (++i < g_input_array[NUMBER_OF_PHILOSOPHERS])
 		pthread_create(&thread[i], NULL, philo, (void *)&data[i]);
-	printf("%d", g_input_array[NUMBER_OF_TIMES_EACH_PHILOSOPHERS_MAST_EAT]);
 	if (!g_check_eating)
 		while (!g_error)
 			;
 	i = -1;
-	while (i < g_input_array[NUMBER_OF_PHILOSOPHERS])
+	while (++i < g_input_array[NUMBER_OF_PHILOSOPHERS])
 		pthread_join(thread[i], NULL);
 	i = -1;
 	while (++i < g_input_array[NUMBER_OF_PHILOSOPHERS])
