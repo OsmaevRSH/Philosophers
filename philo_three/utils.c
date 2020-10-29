@@ -67,8 +67,6 @@ void	philo(t_thread	*philo)
 	pthread_t	died;
 
 	pthread_create(&died, NULL, check_died, philo);
-	if (philo->id & 1)
-		sleep_func(g_input_array[TIME_TO_EAT]);
 	philo->init = get_current_time();
 	while (check_count_of_eating(philo->eat_counter))
 	{

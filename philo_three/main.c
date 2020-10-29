@@ -42,7 +42,7 @@ void	thread_func(void)
 	i = -1;
 	while (++i < g_input_array[NUMBER_OF_PHILOSOPHERS])
 	{
-		if ((pid_array[i] = fork() < 0))
+		if ((pid_array[i] = fork()) < 0)
 			exit(1);
 		if (!pid_array[i])
 		{
