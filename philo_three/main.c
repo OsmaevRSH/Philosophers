@@ -17,7 +17,7 @@ void	init_mutex_struct(t_thread *data)
 	short i;
 
 	i = -1;
-	if (!(semaphore = sem_open("forks_semaphore", O_CREAT , 0600, g_input_array[NUMBER_OF_PHILOSOPHERS])))
+	if (!(semaphore = sem_open("forks_semaphore", O_CREAT , 0666, g_input_array[NUMBER_OF_PHILOSOPHERS])))
 	{
 		write(2, "error", 5);
 		exit(1);
@@ -32,15 +32,13 @@ void	init_mutex_struct(t_thread *data)
 
 void	thread_func(void)
 {
-	t_thread		data[g_input_array[NUMBER_OF_PHILOSOPHERS]];
-	pthread_t		thread[g_input_array[NUMBER_OF_PHILOSOPHERS]];
-	pid_t			pid_array[NUMBER_OF_PHILOSOPHERS];
+	t_thread		*data = (t_thread *)malloc(sizeof(t_thread) * g_input_array[NUMBER_OF_PHILOSOPHERS]);
+	pid_t			*pid_array = (pid_t *)malloc(sizeof(pid_t) * g_input_array[NUMBER_OF_PHILOSOPHERS]);
 	short			i;
-	pthread_t		died[NUMBER_OF_PHILOSOPHERS];
-	int status;
+	int				status;
 
 	sem_unlink("forks_semaphore");
-	init_mutex_struct((t_thread *)&data);
+	init_mutex_struct(data);
 	i = -1;
 	while (++i < g_input_array[NUMBER_OF_PHILOSOPHERS])
 	{
@@ -48,38 +46,17 @@ void	thread_func(void)
 			exit(1);
 		if (!pid_array[i])
 		{
-
-			pthread_create(&died[i], NULL, check_died, (void *)&data[i]);
-			data[i].init = get_current_time();
-			while (check_count_of_eating(data[i].eat_counter))
-			{
-				sem_wait(semaphore);
-				ft_str_print(0, &data[i]);
-				sem_wait(semaphore);
-				ft_str_print(0, &data[i]);
-				data[i].init = get_current_time();
-				ft_str_print(1, philo);
-				sleep_func(g_input_array[TIME_TO_EAT]);
-				sem_post(semaphore);
-				sem_post(semaphore);
-				ft_str_print(2, philo);
-				sleep_func(g_input_array[TIME_TO_SLEEP]);
-				ft_str_print(3, philo);
-			}
+			philo(&data[i]);
+			exit(0);
 		}
 	}
 	waitpid(-1, &status, 0);
+	i = -1;
 	if (WEXITSTATUS(status) == 1)
 	{
 		while (++i < g_input_array[NUMBER_OF_PHILOSOPHERS])
 			kill(pid_array[i], SIGKILL);
 	}
-	if (!g_check_eating)
-		while (!g_error)
-			;
-	i = 0;
-	while (i < g_input_array[NUMBER_OF_PHILOSOPHERS])
-		pthread_join(thread[i++], NULL);
 	sem_close(semaphore);
 	sem_unlink("forks_semaphore");
 }

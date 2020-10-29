@@ -27,7 +27,6 @@
 # define TIME_TO_SLEEP 3
 # define NUMBER_OF_TIMES_EACH_PHILOSOPHERS_MAST_EAT 4
 
-uint8_t				g_error;
 uint32_t			g_time;
 uint8_t				g_check_eating;
 uint32_t			g_input_array[5];
@@ -55,7 +54,7 @@ int					ft_atoi(const char *str);
 time_t				get_current_time();
 void				ft_str_print(uint8_t j, t_thread *philo);
 void				*check_died(void *ref_time);
-void				*philo(void *data);
+void				philo(t_thread	*philo);
 uint8_t				check_count_of_eating(uint16_t count);
 void				sleep_func(unsigned ms_time);
 

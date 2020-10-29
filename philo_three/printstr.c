@@ -56,8 +56,6 @@ void		ft_str_print(uint8_t j, t_thread *philo)
 {
 	t_print					print;
 
-	if (g_error || (!g_error && g_check_eating && j == 4 && philo->eat_counter == g_input_array[NUMBER_OF_TIMES_EACH_PHILOSOPHERS_MAST_EAT]))
-		return ;
 	j == 1 ? philo->eat_counter += 1 : 0;
 	print_init(&print, philo, j);
 	while (++print.i ^ print.size)
