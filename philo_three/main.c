@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ltheresi <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: wquinoa <wquinoa@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/26 18:46:29 by ltheresi          #+#    #+#             */
-/*   Updated: 2020/10/26 18:46:31 by ltheresi         ###   ########.fr       */
+/*   Updated: 2020/10/29 23:06:09 by wquinoa          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ void	thread_func(void)
 	i = -1;
 	while (++i < g_input_array[NUMBER_OF_PHILOSOPHERS])
 	{
-		if ((pid_array[i] = fork() < 0))
+		if ((pid_array[i] = fork()) < 0)
 			exit(1);
 		if (!pid_array[i])
 		{
