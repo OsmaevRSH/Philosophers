@@ -46,7 +46,7 @@ void	thread_func(void)
 			exit(1);
 		if (!pid_array[i])
 		{
-			philo(&data[i]);
+			philo_func(&data[i]);
 			exit(0);
 		}
 	}
@@ -57,6 +57,8 @@ void	thread_func(void)
 		while (++i < g_input_array[NUMBER_OF_PHILOSOPHERS])
 			kill(pid_array[i], SIGKILL);
 	}
+	free(data);
+	free(pid_array);
 	sem_close(semaphore);
 	sem_unlink("forks_semaphore");
 }

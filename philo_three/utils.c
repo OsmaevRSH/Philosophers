@@ -62,7 +62,7 @@ uint8_t	check_count_of_eating(uint16_t count)
 	return (1);
 }
 
-void	philo(t_thread	*philo)
+void	philo_func(t_thread	*philo)
 {
 	pthread_t	died;
 
