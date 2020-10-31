@@ -45,7 +45,7 @@ void		print_init(t_print *print, t_thread *philo, uint8_t j)
 {
 	print->str = g_message_array[j];
 	memset(print->stat_buffer, ' ', sizeof(print->stat_buffer));
-	print->tmp = philo->id;
+	print->tmp = philo->id + 1;
 	print->time = get_current_time() - g_time;
 	print->size = ft_nlen(print->time);
 	print->len = print->size + 1;

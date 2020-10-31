@@ -20,7 +20,7 @@
 # include <sys/time.h>
 # include "string.h"
 # include <semaphore.h>
-#include <signal.h>
+# include <signal.h>
 # define NUMBER_OF_PHILOSOPHERS 0
 # define TIME_TO_DIE 1
 # define TIME_TO_EAT 2
@@ -30,7 +30,7 @@
 uint32_t			g_time;
 uint8_t				g_check_eating;
 uint32_t			g_input_array[5];
-sem_t				*semaphore;
+sem_t				*g_semaphore;
 
 typedef struct		s_thread
 {

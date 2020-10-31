@@ -30,7 +30,7 @@ uint8_t				g_error;
 uint32_t			g_time;
 uint8_t				g_check_eating;
 uint32_t			g_input_array[5];
-sem_t				*semaphore;
+sem_t				*g_semaphore;
 
 typedef struct		s_thread
 {

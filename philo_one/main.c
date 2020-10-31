@@ -20,16 +20,13 @@ void	init_mutex_struct(t_thread *data,
 	i = -1;
 	while (++i < g_input_array[NUMBER_OF_PHILOSOPHERS])
 		pthread_mutex_init(&(mutex[i]), NULL);
-	i = 0;
-	data[0].id = 0;
-	data[0].right_fork = &mutex[g_input_array[NUMBER_OF_PHILOSOPHERS] - 1];
-	data[0].left_fork = &mutex[0];
-	data[0].eat_counter = 0;
+	i = -1;
 	while (++i < g_input_array[NUMBER_OF_PHILOSOPHERS])
 	{
 		data[i].id = i;
 		data[i].right_fork = &mutex[i];
-		data[i].left_fork = &mutex[i - 1 < 0 ? g_input_array[NUMBER_OF_PHILOSOPHERS] - 1 : i - 1];
+		data[i].left_fork = &mutex[i - 1 < 0 ?
+		g_input_array[NUMBER_OF_PHILOSOPHERS] - 1 : i - 1];
 		data[i].eat_counter = 0;
 	}
 	g_time = get_current_time();
@@ -37,11 +34,17 @@ void	init_mutex_struct(t_thread *data,
 
 void	thread_func(void)
 {
-	pthread_mutex_t	*mutex = (pthread_mutex_t *)malloc(sizeof(pthread_mutex_t) * g_input_array[NUMBER_OF_PHILOSOPHERS]);
-	t_thread		*data = (t_thread *)malloc(sizeof(t_thread) * g_input_array[NUMBER_OF_PHILOSOPHERS]);
-	pthread_t		*thread = (pthread_t *)malloc(sizeof(pthread_t) * g_input_array[NUMBER_OF_PHILOSOPHERS]);
+	pthread_mutex_t	*mutex;
+	t_thread		*data;
+	pthread_t		*thread;
 	short			i;
 
+	mutex = (pthread_mutex_t *)malloc(sizeof(pthread_mutex_t)
+	* g_input_array[NUMBER_OF_PHILOSOPHERS]);
+	data = (t_thread *)malloc(sizeof(t_thread)
+	* g_input_array[NUMBER_OF_PHILOSOPHERS]);
+	thread = (pthread_t *)malloc(sizeof(pthread_t)
+	* g_input_array[NUMBER_OF_PHILOSOPHERS]);
 	init_mutex_struct(data, mutex);
 	i = -1;
 	while (++i < g_input_array[NUMBER_OF_PHILOSOPHERS])
@@ -49,10 +52,8 @@ void	thread_func(void)
 	if (!g_check_eating)
 		while (!g_error)
 			;
-	i = -1;
-	while (++i < g_input_array[NUMBER_OF_PHILOSOPHERS])
+	while (--i >= 0)
 		pthread_join(thread[i], NULL);
-	i = -1;
 	while (++i < g_input_array[NUMBER_OF_PHILOSOPHERS])
 		pthread_mutex_destroy(&mutex[i]);
 	free(mutex);

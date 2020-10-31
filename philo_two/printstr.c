@@ -45,7 +45,7 @@ void		print_init(t_print *print, t_thread *philo, uint8_t j)
 {
 	print->str = g_message_array[j];
 	memset(print->stat_buffer, ' ', sizeof(print->stat_buffer));
-	print->tmp = philo->id;
+	print->tmp = philo->id + 1;
 	print->time = get_current_time() - g_time;
 	print->size = ft_nlen(print->time);
 	print->len = print->size + 1;
@@ -56,7 +56,8 @@ void		ft_str_print(uint8_t j, t_thread *philo)
 {
 	t_print					print;
 
-	if (g_error || (!g_error && g_check_eating && j == 4 && philo->eat_counter == g_input_array[NUMBER_OF_TIMES_EACH_PHILOSOPHERS_MAST_EAT]))
+	if (g_error || (!g_error && g_check_eating && j == 4 && philo->eat_counter
+	== g_input_array[NUMBER_OF_TIMES_EACH_PHILOSOPHERS_MAST_EAT]))
 		return ;
 	j == 1 ? philo->eat_counter += 1 : 0;
 	print_init(&print, philo, j);

@@ -17,11 +17,8 @@ void	init_mutex_struct(t_thread *data)
 	short i;
 
 	i = -1;
-	if (!(semaphore = sem_open("forks_semaphore", O_CREAT , 0666, g_input_array[NUMBER_OF_PHILOSOPHERS])))
-	{
-		write(2, "error", 5);
-		exit(1);
-	}
+	g_semaphore = sem_open("forks_semaphore", O_CREAT,
+	0666, g_input_array[NUMBER_OF_PHILOSOPHERS]);
 	while (++i < g_input_array[NUMBER_OF_PHILOSOPHERS])
 	{
 		data[i].id = i;
@@ -30,26 +27,33 @@ void	init_mutex_struct(t_thread *data)
 	g_time = get_current_time();
 }
 
+void	fork_func(pid_t *pid_array, t_thread *data, short i)
+{
+	if ((pid_array[i] = fork()) < 0)
+		exit(1);
+	if (!pid_array[i])
+	{
+		philo_func(&data[i]);
+		exit(0);
+	}
+}
+
 void	thread_func(void)
 {
-	t_thread		*data = (t_thread *)malloc(sizeof(t_thread) * g_input_array[NUMBER_OF_PHILOSOPHERS]);
-	pid_t			*pid_array = (pid_t *)malloc(sizeof(pid_t) * g_input_array[NUMBER_OF_PHILOSOPHERS]);
+	t_thread		*data;
+	pid_t			*pid_array;
 	short			i;
 	int				status;
 
+	data = (t_thread *)malloc(sizeof(t_thread)
+	* g_input_array[NUMBER_OF_PHILOSOPHERS]);
+	pid_array = (pid_t *)malloc(sizeof(pid_t)
+	* g_input_array[NUMBER_OF_PHILOSOPHERS]);
 	sem_unlink("forks_semaphore");
 	init_mutex_struct(data);
 	i = -1;
 	while (++i < g_input_array[NUMBER_OF_PHILOSOPHERS])
-	{
-		if ((pid_array[i] = fork()) < 0)
-			exit(1);
-		if (!pid_array[i])
-		{
-			philo_func(&data[i]);
-			exit(0);
-		}
-	}
+		fork_func(pid_array, data, i);
 	waitpid(-1, &status, 0);
 	i = -1;
 	if (WEXITSTATUS(status) == 1)
@@ -59,7 +63,7 @@ void	thread_func(void)
 	}
 	free(data);
 	free(pid_array);
-	sem_close(semaphore);
+	sem_close(g_semaphore);
 	sem_unlink("forks_semaphore");
 }
 
