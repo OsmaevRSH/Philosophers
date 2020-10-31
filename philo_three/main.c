@@ -57,14 +57,14 @@ void	thread_func(void)
 	waitpid(-1, &status, 0);
 	i = -1;
 	if (WEXITSTATUS(status) == 1)
-	{
 		while (++i < g_input_array[NUMBER_OF_PHILOSOPHERS])
 			kill(pid_array[i], SIGKILL);
-	}
+	else
+		while (++i < g_input_array[NUMBER_OF_PHILOSOPHERS])
+			waitpid(pid_array[i], &status, 0);
 	free(data);
 	free(pid_array);
 	sem_close(g_semaphore);
-	sem_unlink("forks_semaphore");
 }
 
 int		main(int argc, char **argv)

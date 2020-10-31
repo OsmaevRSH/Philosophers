@@ -36,10 +36,6 @@ void	thread_func(void)
 	sem_unlink("forks_semaphore");
 	init_mutex_struct((t_thread *)&data);
 	i = -1;
-	while (++i < g_input_array[NUMBER_OF_PHILOSOPHERS] / 2)
-		pthread_create(&thread[i], NULL, philo, (void *)&data[i]);
-	sleep_func(g_input_array[TIME_TO_SLEEP]);
-	--i;
 	while (++i < g_input_array[NUMBER_OF_PHILOSOPHERS])
 		pthread_create(&thread[i], NULL, philo, (void *)&data[i]);
 	if (!g_check_eating)
