@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   philo_one.h                                        :+:      :+:    :+:   */
+/*   philo.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ltheresi <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/26 15:40:20 by ltheresi          #+#    #+#             */
-/*   Updated: 2020/10/26 15:40:22 by ltheresi         ###   ########.fr       */
+/*   Updated: 2020/11/02 00:31:16 by ltheresi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ typedef struct		s_print
 
 int					ft_atoi(const char *str);
 time_t				get_current_time();
-int ft_str_print(uint8_t j, t_thread *philo);
+int					ft_str_print(uint8_t j, t_thread *philo);
 void				*check_died(void *ref_time);
 void				*philo(void *data);
 uint8_t				check_count_of_eating(uint16_t count);

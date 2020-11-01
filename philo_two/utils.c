@@ -74,6 +74,8 @@ void	*philo(void *data)
 	t_thread	*philo;
 
 	philo = (t_thread *)data;
+	if ((philo->id & 1) == 1)
+		sleep_func(g_input_array[TIME_TO_SLEEP]);
 	pthread_create(&died, NULL, check_died, (void *)philo);
 	philo->init = get_current_time();
 	while (check_count_of_eating(philo->eat_counter))

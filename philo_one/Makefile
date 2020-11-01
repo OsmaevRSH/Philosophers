@@ -41,7 +41,7 @@ test2:
 test3:
 		@MAKE re
 		@MAKE clean
-		./philo_one 4 410 200 200 7
+		./philo_one 4 410 200 200
 		@MAKE fclean
 
 test4:

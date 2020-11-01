@@ -6,11 +6,29 @@
 /*   By: ltheresi <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/26 18:46:29 by ltheresi          #+#    #+#             */
-/*   Updated: 2020/10/26 18:46:31 by ltheresi         ###   ########.fr       */
+/*   Updated: 2020/11/02 01:20:01 by ltheresi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
+
+int		ft_atoi(const char *str)
+{
+	int					sign;
+	unsigned long long	sum;
+
+	sign = 1;
+	sum = 0;
+	while (*str == ' ' || *str == '\t' || *str == '\n' || \
+		*str == '\r' || *str == '\f' || *str == '\v')
+		str++;
+	while (*str >= '0' && *str <= '9')
+	{
+		sum = sum * 10 + (*str - 48);
+		str++;
+	}
+	return ((int)(sign * sum));
+}
 
 void	init_mutex_struct(t_thread *data,
 		pthread_mutex_t *mutex)
@@ -21,10 +39,10 @@ void	init_mutex_struct(t_thread *data,
 	while (++i < g_input_array[NUMBER_OF_PHILOSOPHERS])
 		pthread_mutex_init(&(mutex[i]), NULL);
 	i = 0;
-	data[0].id = 0;
-	data[0].left_fork = &mutex[0];
-	data[0].right_fork = &mutex[g_input_array[NUMBER_OF_PHILOSOPHERS] - 1];
-	data[0].eat_counter = 0;
+	data[i].id = i;
+	data[i].left_fork = &mutex[i];
+	data[i].right_fork = &mutex[g_input_array[NUMBER_OF_PHILOSOPHERS] - 1];
+	data[i].eat_counter = 0;
 	while (++i < g_input_array[NUMBER_OF_PHILOSOPHERS])
 	{
 		data[i].id = i;

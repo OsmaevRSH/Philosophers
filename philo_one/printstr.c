@@ -6,7 +6,7 @@
 /*   By: ltheresi <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/26 15:38:12 by ltheresi          #+#    #+#             */
-/*   Updated: 2020/10/26 15:38:15 by ltheresi         ###   ########.fr       */
+/*   Updated: 2020/11/02 00:32:35 by ltheresi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ void		print_init(t_print *print, t_thread *philo, uint8_t j)
 	print->i = -1;
 }
 
-int				ft_str_print(uint8_t j, t_thread *philo)
+int			ft_str_print(uint8_t j, t_thread *philo)
 {
 	t_print					print;
 
@@ -77,7 +77,5 @@ int				ft_str_print(uint8_t j, t_thread *philo)
 	while (*print.str)
 		print.stat_buffer[print.len++ + print.size + 1] = *print.str++;
 	write(1, print.stat_buffer, print.len + print.size + 1);
-	if (g_error)
-		return (1);
-	return (0);
+	return (g_error ? 1 : 0);
 }
