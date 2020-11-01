@@ -52,12 +52,13 @@ void		print_init(t_print *print, t_thread *philo, uint8_t j)
 	print->i = -1;
 }
 
-void		ft_str_print(uint8_t j, t_thread *philo)
+int				ft_str_print(uint8_t j, t_thread *philo)
 {
 	t_print					print;
 
 	if (g_error)
-		return ;
+		return (1);
+	j == 4 ? g_error += 1 : 0;
 	j == 1 ? philo->eat_counter += 1 : 0;
 	print_init(&print, philo, j);
 	while (++print.i ^ print.size)
@@ -76,4 +77,7 @@ void		ft_str_print(uint8_t j, t_thread *philo)
 	while (*print.str)
 		print.stat_buffer[print.len++ + print.size + 1] = *print.str++;
 	write(1, print.stat_buffer, print.len + print.size + 1);
+	if (g_error)
+		return (1);
+	return (0);
 }

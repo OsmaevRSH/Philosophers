@@ -20,7 +20,11 @@ void	init_mutex_struct(t_thread *data,
 	i = -1;
 	while (++i < g_input_array[NUMBER_OF_PHILOSOPHERS])
 		pthread_mutex_init(&(mutex[i]), NULL);
-	i = -1;
+	i = 0;
+	data[0].id = 0;
+	data[0].left_fork = &mutex[0];
+	data[0].right_fork = &mutex[g_input_array[NUMBER_OF_PHILOSOPHERS] - 1];
+	data[0].eat_counter = 0;
 	while (++i < g_input_array[NUMBER_OF_PHILOSOPHERS])
 	{
 		data[i].id = i;
@@ -49,9 +53,8 @@ void	thread_func(void)
 	i = -1;
 	while (++i < g_input_array[NUMBER_OF_PHILOSOPHERS])
 		pthread_create(&thread[i], NULL, philo, (void *)&data[i]);
-	if (!g_check_eating)
-		while (!g_error)
-			;
+	while (!g_error && !g_check_eating)
+		;
 	while (--i >= 0)
 		pthread_join(thread[i], NULL);
 	while (++i < g_input_array[NUMBER_OF_PHILOSOPHERS])

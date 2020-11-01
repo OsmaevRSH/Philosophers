@@ -1,6 +1,12 @@
 cmake_minimum_required(VERSION 3.17)
-project(Philosophers C)
+project(philo_one C)
 
-set(CMAKE_C_STANDARD 99)
+set(CMAKE_C_STANDARD 11)
 
-add_executable(philo_one main.c philo.h utils.c printstr.c)
+include_directories(.)
+
+add_executable(philo_one
+        main.c
+        philo.h
+        printstr.c
+        utils.c)
